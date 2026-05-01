@@ -1,0 +1,2179 @@
+/* ============================================================
+   style.css — Morning Bites
+   الملف ده بيخدم كل الصفحات الـ 8:
+   index, menu, offers, reservation, delivery, about, contact, gallery
+
+   ┌─────────────────────────────────────────────────────────┐
+   │              الكلاسات المشتركة بين كل الصفحات          │
+   ├──────────────────────────┬──────────────────────────────┤
+   │ الكلاس                   │ بيُستخدم في                  │
+   ├──────────────────────────┼──────────────────────────────┤
+   │ .full-wrapper            │ كل الصفحات                   │
+   │ .top-header / .logo-area │ كل الصفحات (header)          │
+   │ .logo-img / .logo-text   │ كل الصفحات (header)          │
+   │ .menu-btn / .theme-btn   │ كل الصفحات (header)          │
+   │ .nav-overlay / .nav-panel│ كل الصفحات (sidebar nav)     │
+   │ .nav-links               │ كل الصفحات (sidebar nav)     │
+   │ .footer-simple           │ كل الصفحات (footer)          │
+   │ .hero-offers             │ menu + offers + contact       │
+   │ .order-card-btn          │ index + menu + offers         │
+   │ .section-title           │ menu + offers                 │
+   │ .form-grid / .form-group │ reservation + contact         │
+   │ .submit-btn              │ reservation + contact         │
+   └──────────────────────────┴──────────────────────────────┘
+
+   CSS خاص بكل صفحة موجود في الـ <style> داخل الصفحة نفسها.
+   ============================================================ */
+
+
+/* ============================================================
+   RESET — إزالة الـ margin والـ padding الافتراضية
+   ============================================================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+}
+
+
+/* ============================================================
+   BODY — الإعدادات الأساسية لكل الصفحات
+   ============================================================ */
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #fff9f2;   /* خلفية بيضاء دافية */
+  color: #2c241a;               /* لون النص الداكن */
+  line-height: 1.4;
+}
+
+
+/* ============================================================
+   FULL WRAPPER — الحاوية الرئيسية اللي بتحدد عرض الصفحة
+   بتُستخدم في كل الصفحات
+   ============================================================ */
+.full-wrapper {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem 2rem 2rem;
+}
+
+
+/* ============================================================
+   TOP HEADER — الهيدر العلوي (لوجو + زرار القائمة + زرار الثيم)
+   بيتكرر في كل الصفحات
+   ============================================================ */
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* المنطقة اللي فيها اللوجو وزرار القائمة */
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* زرار الـ ☰ اللي بيفتح القائمة الجانبية */
+.menu-btn {
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #c17b3a;
+  transition: 0.2s;
+}
+.menu-btn:hover {
+  color: #a66227;
+}
+
+/* صورة اللوجو */
+.logo-img img {
+  width: 140px;
+  border-radius: 50px;
+}
+
+/* اسم المطعم والـ tagline في اليمين */
+.logo-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  order: 3;
+  position: absolute;
+  text-align: right;
+  right: 20px;
+}
+.logo-text h2 {
+  font-size: 1.01rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+  color: #bF5f2a;
+  text-align: right;
+}
+.logo-text p {
+  font-size: 0.5rem;
+  color: #ad8564;
+  margin-top: 2px;
+  text-align: right;
+}
+
+/* زرار تغيير الثيم (داكن/فاتح) */
+.theme-btn {
+  background: #eedbcb;
+  border: none;
+  cursor: pointer;
+  width: 29px;
+  height: 29px;
+  border-radius: 50%;
+  font-size: 18px;
+  transition: 0.2s;
+}
+.theme-btn:hover {
+  background: #f7ede2;
+  transform: scale(1.1);
+}
+
+
+/* ============================================================
+   NAVIGATION OVERLAY — القائمة الجانبية اللي بتنزل من الشمال
+   بتتفعل لما تضغط ☰ في أي صفحة all pages
+   ============================================================ */
+
+/* الطبقة الشفافة خلف القائمة */
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.25s ease;
+}
+
+/* اللوحة البيضاء اللي فيها الروابط */
+.nav-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100%;
+  background: #ffffff;
+  box-shadow: 8px 0 32px rgba(0,0,0,0.08);
+  padding: 2rem 1.8rem;
+  z-index: 1100;
+  transform: translateX(-100%);   /* مخفية لليسار بالأول */
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* لما تُضاف class="active" بالـ JS تظهر القائمة */
+.nav-overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+.nav-overlay.active .nav-panel {
+  transform: translateX(0);   /* بتتحرك للشاشة */
+}
+
+/* عنوان القائمة */
+.nav-panel h4 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-bottom: 2px solid #f0dfcf;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.8rem;
+  color: #c17b3a;
+}
+
+/* قائمة الروابط */
+.nav-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.nav-links li a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #4a3727;
+  font-size: 1.1rem;
+  display: block;
+  padding: 0.4rem 0.6rem;
+  border-left: 3px solid transparent;
+  transition: 0.2s;
+}
+.nav-links li a:hover {
+  border-left-color: #c17b3a;
+  color: #c17b3a;
+  background: #fef5ec;
+}
+
+/* زرار الـ × لإغلاق القائمة */
+.close-nav {
+  align-self: flex-end;
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: #aa7a52;
+  margin-bottom: 1rem;
+}
+
+
+/* ============================================================
+   FOOTER — أسفل كل الصفحات all pages
+   ============================================================ */
+.footer-simple {
+  margin-top: 3rem;
+  text-align: center;
+  padding: 1.5rem 0 1rem;
+  border-top: 1px solid #efddce;
+  color: #926856;
+  font-size: 0.8rem;
+}
+
+
+/* ============================================================
+   HERO BANNER — البانر العلوي المشترك all pages
+   ============================================================ */
+.hero-offers {
+  background: #ffece2;
+  border-radius: 36px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 2.4rem;
+}
+.hero-offers h1 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+.hero-offers p {
+  color: #6f5540;
+  max-width: 500px;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+}
+
+
+/* ============================================================
+   INDEX PAGE — الصفحة الرئيسية فقط
+   ============================================================ */
+
+/* قسم الـ Hero (صورة كبيرة + نص ترحيبي) */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  background: #ffece2;
+  border-radius: 36px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+.hero-text h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+.hero-text p {
+  color: #6f5540;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+.hero-img img {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 28px;
+  object-fit: cover;
+  background: #edd7c4;
+}
+
+/* قسم الأطباق المميزة */
+.featured {
+  margin-bottom: 2.5rem;
+}
+.featured h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+
+/* الكروت (grid) */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap:  1rem;
+  justify-items: center;
+}
+.card {
+  width: 100%;
+  max-width: 320px;
+  background: white;
+  border-radius: 24px;
+  padding: 1rem;
+  border: 1px solid #f0e2d4;
+  text-align: center;
+  transition: 0.2s;
+  justify-content: center;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08);
+}
+.card .img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 16px;
+  background: #faf0e6;
+  margin-bottom: 0.6rem;
+}
+.card p {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.price {
+  font-size: 0.85rem;
+  color: #c17b3a;
+  font-weight: 600;
+}
+
+/* أزرار الـ actions (View Menu, Reserve, Delivery) */
+.actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+  justify-content: center;
+}
+.actions a {
+  text-decoration: none;
+}
+.action-btn {
+  background-color: #c17b3a;
+  border: none;
+  padding: 0.7rem 1.6rem;
+  border-radius: 40px;
+  font-weight: 700;
+  color: white;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.action-btn:hover {
+  background-color: #a66227;
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   MENU PAGE — Menu.html فقط
+   ============================================================ */
+
+/* عناوين الأقسام الكبيرة (🥐 Breakfast) */
+.section-title {
+  font-size: 1.7rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1rem 0;
+  letter-spacing: -0.3px;
+}
+
+/* عناوين الأقسام الصغيرة (Fresh Bakery, Sandwiches...) */
+.subsection-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #c17b3a;
+  margin: 1.5rem 0 0.8rem 0;
+  border-left: 4px solid #c17b3a;
+  padding-left: 0.6rem;
+}
+
+/* الـ grid لكروت المنيو — auto-fit + justify-content:center عشان الكروت تتوسط */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 240px));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+
+/* كرت الأكلة الواحدة في المنيو */
+.croisants {
+  background: white;
+  border-radius: 24px;
+  padding: 1rem;
+  border: 1px solid #f0e2d4;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  transition: 0.2s;
+}
+.croisants:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px -8px rgba(0,0,0,0.08);
+}
+.croisants .img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 16px;
+  background: #faf0e6;
+}
+.croisants h4 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #2c241a;
+}
+.ingredients {
+  font-size: 0.75rem;
+  color: #876e55;
+  line-height: 1.4;
+}
+
+
+/* ============================================================
+   ORDER BUTTONS — زرار "Order Now" المستخدم في Menu + offers+ index
+   ============================================================ */
+
+/* زرار كبير ملون (Spotlight card) */
+.order-now-btn {
+  background-color: #c17b3a;
+  border: none;
+  padding: 0.7rem 1.8rem;
+  border-radius: 40px;
+  font-weight: 700;
+  color: white;
+  font-family: inherit;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 0.6rem;
+  transition: 0.2s;
+}
+.order-now-btn:hover {
+  background-color: #a66227;
+  transform: translateY(-2px);
+}
+
+/* زرار صغير بحدود (كروت المنيو والعروض) */
+.order-card-btn {
+  background: transparent;
+  border: 1.8px solid #c17b3a;
+  border-radius: 40px;
+  padding: 0.45rem 0;
+  width: 100%;
+  font-weight: 600;
+  color: #c17b3a;
+  margin-top: 0.6rem;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: inherit;
+  font-size: 0.85rem;
+}
+.order-card-btn:hover {
+  background: #c17b3a;
+  color: white;
+}
+
+
+/* ============================================================
+   OFFERS PAGE — offers.html فقط
+   ============================================================ */
+
+/* الكرت الضخم للعرض المميز (Sunrise Delight Bowl) */
+.spotlight-card {
+  background: linear-gradient(115deg, #fff5ea, #fffbf6);
+  border-radius: 40px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ffe2c4;
+  box-shadow: 0 12px 22px -12px rgba(0,0,0,0.01);
+}
+.spotlight-info { flex: 2; }
+
+/* شريط "Limited time" البرتقالي */
+.limited-tag {
+  background: #cb6e2e;
+  display: inline-block;
+  padding: 0.2rem 1rem;
+  border-radius: 40px;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.75rem;
+}
+.spotlight-info h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+  color: #2e241d;
+}
+
+/* سطر السعر (قديم + جديد) */
+.price-line {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0.5rem 0;
+}
+.old-price {
+  text-decoration: line-through;
+  color: #b2825c;
+  font-size: 1.1rem;
+}
+.new-price {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #cc5e1e;
+}
+.special-desc {
+  margin: 0.6rem 0;
+  color: #5f4c38;
+  max-width: 500px;
+}
+
+/* صورة العرض المميز */
+.spotlight-img { flex: 1; text-align: center; }
+.spotlight-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 32px;
+  background: #edd7c4;
+  transition: transform 0.2s;
+}
+.spotlight-img img:hover { transform: scale(1.02); }
+
+/* الـ grid للعروض الـ 4 الكبيرة */
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.8rem;
+  margin: 2rem 0 2.5rem 0;
+}
+
+/* كرت العرض الواحد */
+.offer-card {
+  background: white;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.02);
+  border: 1px solid #f0e0d0;
+  transition: 0.2s;
+}
+.offer-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 28px -12px rgba(0,0,0,0.08);
+}
+
+/* حاوية الصورة في كرت العرض — aspect-ratio بدل height ثابت عشان الصورة ما تتقصش */
+.card-img {
+  background: #faf0e6;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* محتوى النص في كرت العرض */
+.card-content { padding: 1rem 1.2rem 1.3rem; }
+.card-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.card-desc {
+  font-size: 0.75rem;
+  color: #876e55;
+  margin: 4px 0 8px;
+}
+
+/* شريط الخصم (20% OFF) */
+.discount-chip {
+  background: #fae5d2;
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #bc6f32;
+}
+
+/* الـ grid للأكلات المخفّضة */
+.menu-picks {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.8rem;
+  margin-bottom: 2rem;
+}
+
+/* كرت الأكلة المخفّضة */
+.menu-item-card {
+  background: white;
+  border-radius: 24px;
+  padding: 1rem;
+  border: 1px solid #f0e2d4;
+}
+
+/* سطر سعر الأكلة المخفّضة */
+.item-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0.5rem 0;
+}
+.item-old {
+  text-decoration: line-through;
+  font-size: 0.8rem;
+  color: #aa8262;
+}
+.item-new {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #c7581c;
+}
+
+
+/* ============================================================
+   RESERVATION PAGE — reservation.html فقط
+   ============================================================ */
+
+/* بانر الـ hero لصفحة الحجز */
+.hero-reservation {
+  background: #ffece2;
+  border-radius: 36px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 2.4rem;
+  text-align: center;
+}
+.hero-reservation h1 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+.hero-reservation p {
+  color: #6f5540;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+}
+
+/* كرت الفورم (Reservation + Delivery + Contact) */
+.reservation-card {
+  background: linear-gradient(115deg, #fff5ea, #fffbf6);
+  border: 1px solid #ffe2c4;
+  border-radius: 40px;
+  padding: 2rem 2.5rem;
+  max-width: 800px;
+  margin: 0 auto 2.5rem auto;
+}
+.reservation-card h2 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: #2e241d;
+}
+
+/* الـ grid داخل الفورم (عمودين) */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* الحقل اللي بياخد عرض كامل (textarea, submit) */
+.form-group.full-width { grid-column: 1 / -1; }
+
+/* label فوق كل حقل */
+.form-group label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #c17b3a;
+  letter-spacing: 0.5px;
+}
+
+/* حقول الإدخال والـ select والـ textarea */
+.form-group input,
+.form-group select,
+.form-group textarea {
+  border: 1.5px solid #f0e0d0;
+  border-radius: 16px;
+  padding: 0.6rem 1rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #2c241a;
+  background: white;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #c17b3a;   /* حدود برتقالية لما تركّز على الحقل */
+}
+.form-group textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+/* زرار الإرسال */
+.submit-btn {
+  background-color: #c17b3a;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  border-radius: 40px;
+  font-weight: 700;
+  color: white;
+  font-family: inherit;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: 0.2s;
+  margin-top: 0.5rem;
+  width: 100%;
+}
+.submit-btn:hover {
+  background-color: #a66227;
+  transform: translateY(-2px);
+}
+
+/* الـ grid لكروت المعلومات (ساعات العمل + الموقع...) */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  max-width: 800px;
+  margin: 0 auto 2.5rem auto;
+}
+
+/* كرت معلومة واحدة */
+.info-card {
+  background: white;
+  border: 1px solid #f0e0d0;
+  border-radius: 28px;
+  padding: 1.4rem 1.8rem;
+  text-align: center;
+}
+.info-card h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #c17b3a;
+  margin-bottom: 0.5rem;
+}
+.info-card p {
+  font-size: 0.85rem;
+  color: #6f5540;
+  line-height: 1.6;
+}
+
+
+
+
+
+/* ============================================================
+   DARK MODE — بيشتغل على كل الصفحات لما تضغط 🌙
+   ============================================================ */
+body.dark {
+  background-color: #201c1c;
+  color: #f0e6da;
+}
+
+/* الهيدر والقائمة داكنين */
+body.dark .nav-panel {
+  background: #1e1e1e;
+  border-color: #2e2018;
+}
+body.dark .logo-text h2 { color: #e8935a; }
+body.dark .logo-text p  { color: #a07850; }
+
+/* الفوتر داكن */
+body.dark .footer-simple {
+  border-color: #2e2018;
+  color: #a07850;
+}
+
+/* كروت وخلفيات داكنة */
+body.dark .offer-card,
+body.dark .menu-item-card,
+body.dark .croisants,
+body.dark .card,
+body.dark .info-card,
+body.dark .stat-card {
+  background: #1e1e1e;
+  border-color: #2e2018;
+}
+
+/* خلفيات البانرات داكنة */
+body.dark .hero-offers,
+body.dark .hero-reservation { background: #1a1008; }
+body.dark .card-img          { background: #1a1008; }
+
+/* كرت الـ spotlight والـ reservation والـ about داكنين */
+body.dark .spotlight-card,
+body.dark .reservation-card,
+body.dark .about-story-card {
+  background: #1c1409;
+  border-color: #3a2010;
+}
+
+/* نصوص داكنة */
+body.dark .card-title,
+body.dark .section-title     { color: #f0e6da; }
+body.dark .card-desc,
+body.dark .special-desc,
+body.dark .about-story-text p { color: #a07850; }
+body.dark .old-price,
+body.dark .item-old           { color: #806050; }
+body.dark .new-price,
+body.dark .item-new           { color: #f07830; }
+
+/* شريط الخصم داكن */
+body.dark .discount-chip {
+  background: #2e200f;
+  color: #e8935a;
+}
+
+/* زرار Order الصغير داكن */
+body.dark .order-card-btn {
+  border-color: #e8935a;
+  color: #e8935a;
+}
+
+/* حقول الفورم داكنة */
+body.dark .form-group input,
+body.dark .form-group select,
+body.dark .form-group textarea {
+  background: #1e1e1e;
+  border-color: #2e2018;
+  color: #f0e6da;
+}
+
+/* الـ hero في index داكن */
+body.dark .hero { background: #1a1008; }
+
+/* كروت الـ actions داكنة */
+body.dark .action-btn {
+  background-color: #a66227;
+}
+
+
+
+
+
+/* ============================================================
+   CONTACT PAGE — contact.html فقط
+   ============================================================ */
+
+/* الـ layout الرئيسي: عمودين (معلومات + فورم) جنب بعض */
+.contact-layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  align-items: flex-start;
+}
+
+/* الجانب الأيسر: المعلومات + الصورة */
+.contact-info-side {
+  flex: 1;
+  min-width: 260px;
+}
+.contact-info-side h2 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #2e241d;
+  margin-bottom: 0.4rem;
+}
+
+/* النص التعريفي تحت العنوان */
+.contact-tagline {
+  font-size: 0.85rem;
+  color: #876e55;
+  margin-bottom: 1.4rem;
+  line-height: 1.6;
+}
+
+/* بطاقة معلومة تواصل واحدة (إيميل / تليفون / عنوان / ساعات) */
+.contact-detail-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+  background: white;
+  border: 1px solid #f0e2d4;
+  border-radius: 20px;
+  padding: 0.9rem 1.2rem;
+  margin-bottom: 0.9rem;
+  transition: 0.2s;
+}
+.contact-detail-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px -8px rgba(0,0,0,0.08);
+}
+
+/* الأيقونة في كل بطاقة */
+.contact-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+/* عنوان المعلومة (Email, Phone...) */
+.contact-detail-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #c17b3a;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+
+/* قيمة المعلومة */
+.contact-detail-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #2c241a;
+}
+
+/* صورة الـ contact في الجانب الأيسر */
+.contact-image {
+  width: 100%;
+  max-width: 320px;
+  margin-top: 1.2rem;
+  display: block;
+}
+
+/* الجانب الأيمن: الفورم — بيستخدم reservation-card لكن بعرض أكبر */
+.contact-form-side {
+  flex: 1.4;
+  min-width: 280px;
+}
+
+/* TOAST — رسالة النجاح بعد إرسال فورم الـ contact */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px); /* مخفية تحت الشاشة */
+  background: #2e7d32;
+  color: white;
+  padding: 0.8rem 2rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  z-index: 9999;
+}
+
+/* لما يتضاف class="show" من JS تظهر الرسالة */
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+/* DARK MODE للـ contact page */
+body.dark .contact-detail-card {
+  background: #1e1e1e;
+  border-color: #2e2018;
+}
+body.dark .contact-detail-value { color: #f0e6da; }
+body.dark .contact-info-side h2  { color: #f0e6da; }
+body.dark .contact-tagline       { color: #a07850; }
+
+/* RESPONSIVE — الـ contact layout يبقى عمود واحد على الموبايل */
+@media (max-width: 680px) {
+  .contact-layout {
+    flex-direction: column;
+  }
+  .contact-image {
+    max-width: 200px;
+    margin: 1rem auto 0;
+  }
+}
+
+/* كرت الـ index (featured cards) يبقى فيه Order btn */
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.card .order-card-btn {
+  width: 100%;
+  margin-top: auto;
+}
+
+
+
+
+
+/* ============================================================
+   RESPONSIVE — للشاشات الصغيرة (موبايل)
+   ============================================================ */
+@media (max-width: 680px) {
+  /* تصغير الـ padding الكلي */
+  .full-wrapper { padding: 1rem; }
+
+  /* تصغير العناوين */
+  .spotlight-info h2 { font-size: 1.5rem; }
+  .new-price         { font-size: 1.6rem; }
+
+  /* الفورم عمود واحد */
+  .form-grid        { grid-template-columns: 1fr; }
+  .info-grid        { grid-template-columns: 1fr; }
+  .reservation-card { padding: 1.5rem 1.2rem; }
+
+  /* الـ hero في index تحت بعض */
+  .hero {
+    flex-direction: column;
+    text-align: center;
+   
+  }
+  .hero-text h1 { font-size: 1.5rem; }
+
+  /* الـ about story تحت بعض */
+  .about-story-card { flex-direction: column; }
+  .cards{ justify-content: center; }
+
+}
+
+
+/* ============================================================
+   Price TABLE — Menu.html
+   ============================================================ */
+.menu-price-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px -4px rgba(0,0,0,0.08);
+}
+.menu-price-table th {
+  background: #c17b3a;
+  color: white;
+  padding: 0.8rem 1rem;
+  text-align: left;
+  font-weight: 700;
+}
+.menu-price-table td {
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid #f0e2d4;
+  color: #2c241a;
+  vertical-align: middle;
+}
+.menu-price-table tbody tr:nth-child(even) td {
+  background: #fffaf5;
+}
+.menu-price-table tbody tr:hover td {
+  background: #ffece2;
+}
+.menu-price-table tfoot td {
+  background: #ffece2;
+  font-size: 0.85rem;
+  color: #6f5540;
+  padding: 0.7rem 1rem;
+}
+/* Dark mode للجدول */
+body.dark .menu-price-table {
+  background: #1e1e1e;
+}
+body.dark .menu-price-table td {
+  border-color: #2e2018;
+  color: #f0e6da;
+}
+body.dark .menu-price-table tbody tr:nth-child(even) td {
+  background: #252020;
+}
+body.dark .menu-price-table tbody tr:hover td {
+  background: #2a1a0a;
+}
+body.dark .menu-price-table tfoot td {
+  background: #1a1008;
+  color: #a07850;
+}
+
+/* ============================================================
+   NOTE: تم حذف .audio-section لأن قسم الصوت اتشال من index.html
+   ============================================================ */
+
+/* ============================================================
+   MAP SECTION — contact.html
+   ============================================================ */
+.map-section {
+  margin: 2rem 0 1.5rem;
+}
+
+/* ============================================================
+   FORM ERROR MESSAGES — Custom JS Validation
+   ============================================================ */
+.form-error {
+  display: block;
+  color: #e03e3e;
+  font-size: 0.75rem;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* ============================================================
+   FONT AWESOME — تعديلات على عناصر بتستخدم FA icons
+   ============================================================ */
+
+/* theme-btn — كان يحمل emoji، دلوقتي FA icon */
+.theme-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+}
+
+/* زرار القائمة ☰ → FA bars */
+.menu-btn i {
+  font-size: 1.8rem;
+  color: #c17b3a;
+}
+
+/* لوجو cursor لما يبقى image map */
+.logo-img img {
+  cursor: pointer;
+}
+
+/* nav links أيقونات */
+.nav-links li a i {
+  width: 18px;
+  text-align: center;
+  color: #c17b3a;
+  margin-right: 4px;
+}
+
+/* dark mode للـ theme icon */
+body.dark .theme-btn i { color: #f0e6da; }
+
+
+/* ============================================================
+   auth.css — Morning Bites
+   بيخدم الصفحات دي:
+     login.html / signup.html / profile.html
+
+   ┌──────────────────────────────────────────────────────┐
+   │ الكلاس                  │ الصفحة                     │
+   ├──────────────────────────┼────────────────────────────┤
+   │ .auth-hero               │ login + signup             │
+   │ .auth-form               │ login + signup             │
+   │ .auth-form-grid          │ signup + profile           │
+   │ .fgroup                  │ login + signup + profile   │
+   │ .input-eye               │ signup + profile           │
+   │ .eye-btn                 │ signup + profile           │
+   │ .avatar-upload-group     │ signup                     │
+   │ .avatar-preview          │ signup                     │
+   │ .avatar-upload-btn       │ signup                     │
+   │ .auth-submit             │ login + signup + profile   │
+   │ .auth-divider            │ login + signup             │
+   │ .auth-footer-text        │ login + signup             │
+   │ .profile-hero            │ profile                    │
+   │ .profile-avatar-wrap     │ profile                    │
+   │ .profile-avatar          │ profile                    │
+   │ .profile-avatar-edit     │ profile                    │
+   │ .profile-hero-info       │ profile                    │
+   │ .member-badge            │ profile                    │
+   │ .profile-section         │ profile                    │
+   │ .profile-edit-form       │ profile                    │
+   │ .profile-actions         │ profile                    │
+   │ .profile-save-btn        │ profile                    │
+   │ .profile-logout-btn      │ profile                    │
+   └──────────────────────────┴────────────────────────────┘
+   ============================================================ */
+
+
+/* ============================================================
+   LOGIN + SIGNUP PAGE LAYOUT
+   توسيط الصفحة عمودياً وأفقياً
+   ============================================================ */
+body:has(.auth-hero) {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  padding: 2rem 1rem;
+}
+
+
+/* ============================================================
+   AUTH HERO — البانر العلوي في login + signup
+   ============================================================ */
+.auth-hero {
+  background: #ffece2;
+  border-radius: 36px 36px 0 0;
+  padding: 1.8rem 2.5rem 1.5rem;
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  border: 1px solid #f0ddd0;
+  border-bottom: none;
+}
+
+.auth-hero h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #2c241a;
+  margin-bottom: 0.3rem;
+  letter-spacing: -0.3px;
+}
+
+.auth-hero h1 i {
+  color: #c17b3a;
+  margin-right: 8px;
+}
+
+.auth-hero p {
+  color: #6f5540;
+  font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   AUTH FORM — الكرت الرئيسي في login + signup
+   ============================================================ */
+.auth-form {
+  background: linear-gradient(115deg, #fff5ea, #fffbf6);
+  border: 1px solid #ffe2c4;
+  border-top: none;
+  border-radius: 0 0 36px 36px;
+  padding: 1.8rem 2.5rem 2.2rem;
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+}
+
+
+/* ============================================================
+   AVATAR UPLOAD — رفع صورة البروفايل في signup
+   ============================================================ */
+.avatar-upload-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.4rem;
+}
+
+/* الدائرة اللي بتعرض الصورة */
+.avatar-preview {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: #ffece2;
+  border: 2.5px solid #f0ddd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #c17b3a;
+  overflow: hidden;
+  transition: border-color 0.2s;
+}
+
+.avatar-preview:hover {
+  border-color: #c17b3a;
+}
+
+/* زرار "upload photo" */
+.avatar-upload-btn {
+  background: transparent;
+  border: 1.8px solid #c17b3a;
+  border-radius: 40px;
+  padding: 0.38rem 1.1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #c17b3a;
+  cursor: pointer;
+  transition: 0.2s;
+  font-family: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.avatar-upload-btn:hover {
+  background: #c17b3a;
+  color: white;
+}
+
+
+/* ============================================================
+   FORM GRID — شبكة الحقول (عمودين) في signup + profile
+   ============================================================ */
+.auth-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.1rem;
+}
+
+/* حقل بيأخد عرض كامل */
+.fgroup.full-width {
+  grid-column: 1 / -1;
+}
+
+
+/* ============================================================
+   FORM GROUP — label + input المشترك في كل الصفحات
+   ============================================================ */
+.fgroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.fgroup label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #c17b3a;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fgroup input {
+  border: 1.5px solid #f0e0d0;
+  border-radius: 14px;
+  padding: 0.65rem 1rem;
+  font-family: inherit;
+  font-size: 0.88rem;
+  color: #2c241a;
+  background: white;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.fgroup input:focus {
+  border-color: #c17b3a;
+}
+
+
+/* ============================================================
+   INPUT + EYE BUTTON — حقل الباسورد مع زرار الإخفاء
+   ============================================================ */
+.input-eye {
+  position: relative;
+}
+
+.input-eye input {
+  padding-right: 2.8rem;
+}
+
+.eye-btn {
+  position: absolute;
+  right: 0.9rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #c17b3a;
+  font-size: 0.9rem;
+  padding: 0;
+  transition: color 0.2s;
+}
+
+.eye-btn:hover {
+  color: #a66227;
+}
+
+
+
+
+/* ============================================================
+   AUTH SUBMIT BUTTON — زرار الإرسال المشترك
+   ============================================================ */
+.auth-submit {
+  background-color: #c17b3a;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 40px;
+  font-weight: 700;
+  color: white;
+  font-family: inherit;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.auth-submit:hover {
+  background-color: #a66227;
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   AUTH DIVIDER — الفاصل "or" في login + signup
+   ============================================================ */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #c4a48a;
+  font-size: 0.75rem;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #f0ddd0;
+}
+
+
+/* ============================================================
+   AUTH FOOTER TEXT — "already have an account?" / "sign up"
+   ============================================================ */
+.auth-footer-text {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #876e55;
+}
+
+.auth-footer-text a {
+  color: #c17b3a;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.auth-footer-text a:hover {
+  text-decoration: underline;
+}
+
+
+/* ============================================================
+   PROFILE PAGE — profile.html
+   ============================================================ */
+
+/* البانر العلوي في صفحة البروفايل */
+.profile-hero {
+  background: linear-gradient(115deg, #ffece2, #fff5ea);
+  border-radius: 36px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border: 1px solid #f0ddd0;
+}
+.profile-icon-btn{
+ float: right;
+ cursor: pointer;
+
+ margin-left: auto;
+
+}
+
+/* الحاوية اللي فيها الصورة وزرار التغيير */
+.profile-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* دائرة الصورة الكبيرة */
+.profile-avatar {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #ffece2;
+  border: 3px solid #f0ddd0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  color: #c17b3a;
+  overflow: hidden;
+}
+
+/* زرار الكاميرا فوق الصورة */
+.profile-avatar-edit {
+  position: absolute;
+  bottom: 4px;
+  right: 4px;
+  width: 30px;
+  height: 30px;
+  background: #c17b3a;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: white;
+  border: 2px solid white;
+  transition: background 0.2s;
+}
+
+.profile-avatar-edit:hover {
+  background: #a66227;
+}
+
+/* معلومات الاسم والإيميل جنب الصورة */
+.profile-hero-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.profile-hero-info h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #2c241a;
+  letter-spacing: -0.3px;
+}
+
+.profile-hero-info p {
+  font-size: 0.88rem;
+  color: #6f5540;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.profile-hero-info p i {
+  color: #c17b3a;
+  font-size: 0.8rem;
+  width: 14px;
+}
+
+/* شارة "member" */
+.member-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: #fae5d2;
+  color: #bc6f32;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.25rem 0.85rem;
+  border-radius: 40px;
+  margin-top: 0.3rem;
+  letter-spacing: 0.4px;
+  width: fit-content;
+}
+
+.member-badge i {
+  font-size: 0.65rem;
+}
+
+
+/* ============================================================
+   PROFILE SECTION — كرت تعديل البيانات
+   ============================================================ */
+.profile-section {
+  background: linear-gradient(115deg, #fff5ea, #fffbf6);
+  border: 1px solid #ffe2c4;
+  border-radius: 36px;
+  padding: 2rem 2.5rem 2.5rem;
+  margin-bottom: 2rem;
+}
+
+.profile-section-header {
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1.5px solid #f0ddd0;
+}
+
+.profile-section-header h2 {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #2c241a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-section-header h2 i {
+  color: #c17b3a;
+}
+
+/* فورم التعديل */
+.profile-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* أزرار الحفظ واللوجاوت */
+.profile-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.4rem;
+}
+
+/* زرار الحفظ — بيأخد نص أكتر من الـ login */
+.profile-save-btn {
+  flex: 2;
+  min-width: 160px;
+}
+
+/* زرار اللوجاوت — outline أحمر فاتح */
+.profile-logout-btn {
+  flex: 1;
+  min-width: 120px;
+  background: transparent;
+  border: 1.8px solid #e05a30;
+  border-radius: 40px;
+  padding: 0.8rem;
+  font-weight: 700;
+  color: #e05a30;
+  font-family: inherit;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  transition: 0.2s;
+}
+
+.profile-logout-btn:hover {
+  background: #e05a30;
+  color: white;
+}
+
+
+/* ============================================================
+   DARK MODE — auth.css
+   ============================================================ */
+
+/* login + signup */
+body.dark .auth-hero {
+  background: #1a1008;
+  border-color: #3a2010;
+}
+body.dark .auth-hero h1 { color: #f0e6da; }
+body.dark .auth-hero p  { color: #a07850; }
+
+body.dark .auth-form {
+  background: #1c1409;
+  border-color: #3a2010;
+}
+
+body.dark .fgroup input {
+  background: #1e1e1e;
+  border-color: #2e2018;
+  color: #f0e6da;
+}
+
+body.dark .fgroup input::placeholder { color: #5a4530; }
+
+body.dark .auth-divider        { color: #5a4030; }
+body.dark .auth-divider::before,
+body.dark .auth-divider::after  { background: #2e2018; }
+
+body.dark .auth-footer-text    { color: #a07850; }
+
+body.dark .avatar-preview {
+  background: #1a1008;
+  border-color: #3a2010;
+}
+
+body.dark .avatar-upload-btn {
+  border-color: #e8935a;
+  color: #e8935a;
+}
+
+/* profile */
+body.dark .profile-hero {
+  background: #1a1008;
+  border-color: #3a2010;
+}
+body.dark .profile-hero-info h1 { color: #f0e6da; }
+body.dark .profile-hero-info p  { color: #a07850; }
+
+body.dark .profile-avatar {
+  background: #1a1008;
+  border-color: #3a2010;
+}
+
+body.dark .member-badge {
+  background: #2e200f;
+  color: #e8935a;
+}
+
+body.dark .profile-section {
+  background: #1c1409;
+  border-color: #3a2010;
+}
+
+body.dark .profile-section-header {
+  border-color: #2e2018;
+}
+body.dark .profile-section-header h2 { color: #f0e6da; }
+
+body.dark .profile-logout-btn {
+  border-color: #c04020;
+  color: #f07050;
+}
+body.dark .profile-logout-btn:hover {
+  background: #c04020;
+  color: white;
+}
+
+
+/* ============================================================
+   RESPONSIVE — موبايل
+   ============================================================ */
+@media (max-width: 540px) {
+  .auth-hero,
+  .auth-form {
+    max-width: 100%;
+    padding: 1.5rem 1.2rem;
+  }
+
+  .auth-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem 1.2rem;
+  }
+
+  .profile-hero-info {
+    align-items: center;
+  }
+
+  .profile-section {
+    padding: 1.5rem 1.2rem;
+  }
+
+  .auth-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-actions {
+    flex-direction: column;
+  }
+
+  .profile-save-btn,
+  .profile-logout-btn {
+    flex: unset;
+    width: 100%;
+  }
+}
+
+/* ============================================================
+   STICKY HEADER — الهيدر الثابت لما تنزل في الصفحة
+   بيفضل ظاهر في أعلى الشاشة حتى لو نزلت للأسفل
+   بيتطبق على كل الصفحات لأن الكلاس .top-header مشترك
+   ============================================================ */
+.top-header {
+  position: sticky;     /* ثابت لما تنزل */
+  top: 0;               /* يبقى في أعلى الشاشة */
+  z-index: 500;         /* فوق كل المحتوى بس تحت الـ nav overlay */
+  background: #fff9f2;  /* نفس لون الـ body عشان ما يبانش المحتوى خلفه */
+  padding: 0.8rem 1.5rem;   /* padding للهيدر */
+  border-bottom: 1px solid #f0e2d4;  /* خط فاصل تحت الهيدر */
+  box-shadow: 0 2px 12px -4px rgba(0,0,0,0.06);  /* ظل خفيف */
+  margin-bottom: 0;     /* بيبقى الـ margin تحته منفصل */
+  border-radius: 0;     /* مش دايري عشان يبقى full width */
+}
+
+/* dark mode للـ sticky header */
+body.dark .top-header {
+  background: #201c1c;
+  border-bottom-color: #2e2018;
+  box-shadow: 0 2px 12px -4px rgba(0,0,0,0.3);
+}
+
+/* عشان المحتوى تحت الهيدر ميتغطاش — نضيف margin للـ hero اللي بعد الهيدر مباشرة */
+.top-header + * {
+  margin-top: 1.5rem;
+}
+
+
+/* ============================================================
+   HEADER ACTIONS — منطقة أيقونة البروفايل وزرار الثيم
+   بتبقوا في اليمين جنب بعض
+   ============================================================ */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;   /* بيدفعهم لأقصى اليمين */
+}
+
+/* أيقونة البروفايل — زرار دايري زي زرار الثيم */
+.profile-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #eedbcb;
+  color: #c17b3a;
+  font-size: 15px;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.2s;
+  border: none;
+  cursor: pointer;
+}
+.profile-icon-btn:hover {
+  background: #f7ede2;
+  transform: scale(1.1);
+  color: #a66227;
+}
+
+/* dark mode لأيقونة البروفايل */
+body.dark .profile-icon-btn {
+  background: #2e2018;
+  color: #e8935a;
+}
+
+/* إخفاء النص القديم (Morning Bites + Fresh bakery) من كل الصفحات
+   لأننا شلناه من الـ HTML واستبدلناه بـ header-actions */
+.logo-text {
+  display: none;
+}
+
+
+/* ============================================================
+   MENU SEARCH BAR — شريط البحث في صفحة المنيو
+   بيظهر تحت الـ hero banner في menu.html فقط
+   ============================================================ */
+.menu-search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  background: white;
+  border: 1.5px solid #e8d8c8;
+  border-radius: 40px;
+  padding: 0.6rem 1.2rem;
+  margin-bottom: 2rem;
+  max-width: 480px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.menu-search-bar:focus-within {
+  border-color: #c17b3a;
+  box-shadow: 0 0 0 3px rgba(193,123,58,0.12);
+}
+.menu-search-bar i {
+  color: #c17b3a;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.menu-search-bar input {
+  border: none;
+  outline: none;
+  font-size: 0.92rem;
+  font-family: inherit;
+  color: #2c241a;
+  background: transparent;
+  flex: 1;
+}
+.menu-search-bar input::placeholder {
+  color: #b89c82;
+}
+
+/* dark mode لشريط البحث */
+body.dark .menu-search-bar {
+  background: #1e1e1e;
+  border-color: #2e2018;
+}
+body.dark .menu-search-bar input {
+  color: #f0e6da;
+}
+body.dark .menu-search-bar input::placeholder {
+  color: #5a4530;
+}
+
+
+/* ============================================================
+   SEARCH RESULTS — قسم نتايج البحث في المنيو
+   بيظهر بدل كل الأقسام لما في سيرش فعّال
+   ============================================================ */
+#searchResultsSection {
+  display: none;   /* مخفي بالأساس — JS بيعرضه لما فيه سيرش */
+}
+#searchResultsSection h2 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #c17b3a;
+  margin-bottom: 1.2rem;
+}
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 220px));
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* الكرت المطابق للسيرش — بيتميز بلون برتقالي فاتح */
+.search-highlight {
+  border: 2px solid #c17b3a !important;   /* حدود برتقالية */
+  background: #fff5ea !important;          /* خلفية دافية */
+  box-shadow: 0 0 0 3px rgba(193,123,58,0.15);  /* هالة خفيفة */
+}
+
+/* dark mode للـ search highlight */
+body.dark .search-highlight {
+  background: #2a1a08 !important;
+  border-color: #e8935a !important;
+}
+
+/* رسالة "لا توجد نتايج" */
+.no-results {
+  text-align: center;
+  color: #c17b3a;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 2rem;
+  grid-column: 1 / -1;
+}
+
+
+/* ============================================================
+   MENU SEARCH — TABLE HIGHLIGHT STYLES
+   بتظهر لما السيرش بيلاقي نتايج في الجدول
+   ============================================================ */
+
+/* الصف المطابق في الجدول — خلفية برتقالية واضحة */
+.menu-price-table tbody tr.row-highlight td {
+  background: #fff0e0 !important;     /* خلفية برتقالية فاتحة */
+  border-bottom: 1.5px solid #f0c090; /* خط فاصل أغمق */
+  transition: background 0.2s;
+}
+
+/* dark mode للصف المطابق */
+body.dark .menu-price-table tbody tr.row-highlight td {
+  background: #3a2008 !important;
+  border-bottom-color: #5a3010;
+}
+
+/* الحرف/الكلمة المطابقة داخل خلية الاسم — highlight أصفر */
+mark.search-mark {
+  background: #f5a623;       /* برتقالي واضح */
+  color: #fff;
+  border-radius: 3px;
+  padding: 0 2px;
+  font-weight: 800;
+}
+
+/* dark mode للـ mark */
+body.dark mark.search-mark {
+  background: #c17b3a;
+  color: #fff;
+}
+
+
+/* ============================================================
+   About Us — معلومات عنا فقط
+   ============================================================ */
+   
+/* قسم ال Hero + النص */
+.hero-about {
+  background: #ffece2;
+  border-radius: 36px;
+  padding: 1.8rem 2rem;
+  margin-bottom: 2.4rem;
+}
+.hero-about h1 {
+  font-size: 2rem;
+  font-weight: 800;
+}
+.hero-about p {
+  color: #6f5540;
+  max-width: 500px;
+  margin-top: 0.3rem;
+  font-size: 0.9rem;
+}
+/* الاساسي (main) */
+.Main{
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.about-story p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  color: #2c241a;
+}
+ 
+/* معرض الصور (Image Gallery) */ 
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin: 2rem 0;
+}
+.image-gallery figure {
+  background: #ffffff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.3s, background 0.3s;
+}
+.image-gallery figure:hover {
+  transform: translateY(-4px);
+}
+.image-gallery img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+.image-gallery figcaption {
+  padding: 0.7rem;
+  text-align: center;
+  font-weight: 500;
+  color: #2c241a;
+}
+
+
+/* مشغل الصوت (Audio Player) */
+audio {
+  width: 100%;
+  max-width: 400px;
+  margin: 1rem 0 2rem;
+}
+
+/* توصيات العملاء (Testimonials) */
+.testimonials-section {
+  margin: 3rem 0 2rem;
+}
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.testimonial-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: background 0.3s;
+}
+.stars {
+  color: #f39c12;
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+.quote {
+  font-style: italic;
+  margin-bottom: 0.8rem;
+  color: #2c241a;
+}
+.customer-name {
+  font-weight: bold;
+  text-align: right;
+  color: #2c241a;
+  opacity: 0.8;
+}
+
+/* ============================================================
+   About Us — Dark Mode فقط
+   ============================================================ */ 
+/* البانر */
+body.dark .hero-about {
+  background: #1a1008;
+}
+body.dark .hero-about h1 {
+  color: #f0e6da;
+}
+body.dark .hero-about p {
+  color: #b0957a;
+}
+
+/* المحتوى الرئيسي */
+body.dark .about-story p {
+  color: #f0e6da;
+}
+
+/* معرض الصور */
+body.dark .image-gallery figure {
+  background: #1e1e1e;
+}
+body.dark .image-gallery figcaption {
+  color: #f0e6da;
+}
+
+/* التوصيات */
+body.dark .testimonial-card {
+  background: #1e1e1e;
+}
+body.dark .testimonial-card .quote {
+  color: #f0e6da;
+}
+body.dark .testimonial-card .customer-name {
+  color: #f0e6da;
+}
+
+
+/* ============================================================
+   اضافات بسيطه على الوضع الليلي من عندي لو مش كويسه احذفوها
+   ============================================================ */ 
+	
+/* زر الثيم */
+body.dark .theme-btn {
+  background: #3a3a3a;
+}
+body.dark .theme-btn i {
+  color: #f0e6da;
+}
+
+/* القائمة الجانبية */
+body.dark .nav-panel {
+  background: #1e1e1e;
+  border-color: #2e2018;
+}
+body.dark .nav-panel h4 {
+  color: #e8935a;
+  border-bottom-color: #2e2018;
+}
+body.dark .nav-links li a {
+  color: #ddd;
+}
+body.dark .nav-links li a:hover {
+  background: #2a2a2a;
+  border-left-color: #e8935a;
+  color: #e8935a;
+}
+body.dark .close-nav {
+  color: #d4a373;
+}
