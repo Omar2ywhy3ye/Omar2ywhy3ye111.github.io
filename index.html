@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Morning Bites | About Us</title>
+  
+  <!-- ملف الـ CSS الخارجي المشترك بين كل الصفحات -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- مكتبة Font Awesome للأيقونات — بتُستخدم في كل الصفحات -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+
+  <!-- ============================================================
+     FULL WRAPPER — الحاوية الرئيسية اللي بتحدد عرض الصفحة الكلي
+     بتتكرر في كل الصفحات بنفس الكلاس .full-wrapper
+     ============================================================ -->
+  <div class="full-wrapper">
+
+     <!-- ============================================================
+       HEADER — الهيدر العلوي اللي بيحتوي على اللوجو + زرار القائمة + زرار الثيم
+       بيتكرر في كل الصفحات بنفس الكلاسات: .top-header / .logo-area / .logo-img / .logo-text / .theme-btn
+       ============================================================ -->
+    <header class="top-header">
+      <div class="logo-area">
+	  
+	 <!-- زرار ☰ بيفتح القائمة الجانبية — openMenu() موجودة في script.js -->
+        <span onclick="openMenu()" class="menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </span>
+
+	 <!-- صورة اللوجو — Image Map بتخليها link ترجع للـ Home -->
+        <div class="logo-img">	
+		
+		 <a href="index.html" >
+            <img src="images/logo.jpeg" alt="Morning Bites Logo"  >
+         </a>		         
+        </div>
+		
+       <!-- header-actions: أيقونة البروفايل + زرار الثيم -->
+       <!-- شلنا logo-text واستبدلناه بأيقونتين في اليمين -->
+         <div class="header-actions">
+	   <!-- أيقونة البروفايل — بتوديك لصفحة المستخدم لما تضغطها -->
+        <a href="profile.html" class="profile-icon-btn" title="My Profile">
+		 <i class="fa-solid fa-user"></i> 
+		</a>
+	   <!-- زرار الثيم — JS بيتحكم فيه تلقائياً ويحفظ الاختيار -->
+        <button class="theme-btn"><i class="fa-solid fa-moon"></i></button>
+      </div>
+	  
+    </header>
+
+     <!-- ============================================================
+       NAV OVERLAY — القائمة الجانبية اللي بتنزل من الشمال
+       بتتفعل بـ JS لما المستخدم يضغط ☰
+       بتتكرر في كل الصفحات بنفس الكلاسات: .nav-overlay / .nav-panel / .nav-links
+       ============================================================ -->
+     <nav class="nav-overlay" id="navOverlay">
+       <div class="nav-panel">
+	   
+	   <!-- زرار الـ × لإغلاق القائمة — closeMenu() موجودة في script.js -->
+       <button class="close-nav" id="closeNavBtn">
+		<i class="fa-solid fa-xmark"></i>
+       </button>
+	  
+	   <h4>Explore Morning Bites</h4>
+	  
+       <!-- روابط التنقل — نفس الروابط في كل الصفحات -->
+        <ul class="nav-links">
+          <li><a href="index.html"><i class="fa-solid fa-house"></i> Home</a></li>
+          <li><a href="menu.html"><i class="fa-solid fa-utensils"></i> Menu</a></li>
+          <li><a href="reservation.html"><i class="fa-solid fa-calendar-check"></i> Reservation</a></li>
+          <li><a href="#"><i class="fa-solid fa-motorcycle"></i> Delivery</a></li>
+          <li><a href="about.html"><i class="fa-solid fa-circle-info"></i> About Us</a></li>
+          <li><a href="offers.html"><i class="fa-solid fa-tag"></i> Offers</a></li>
+          <li><a href="#"><i class="fa-solid fa-images"></i> Gallery</a></li>
+          <li><a href="contact.html"><i class="fa-solid fa-envelope"></i> Contact Us</a></li>
+        </ul>
+      </div>
+    </nav>
